@@ -244,6 +244,6 @@ if check_password():
         if choose == "Logout":
               del st.session_state['password_correct']  
               st.write("You are Logged Out..........")
-              st.markdown("<a href='http://localhost:8501/' target='_self'>Click Here to Login Again</a>", unsafe_allow_html=True)  
+              st.markdown("<a href='https://share.streamlit.io/ramabhadrarao/mcadailyattendance2022/main/app.py' target='_self'>Click Here to Login Again</a>", unsafe_allow_html=True)  
 
 
