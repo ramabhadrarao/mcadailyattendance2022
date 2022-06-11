@@ -204,7 +204,7 @@ def showconsolidated():
 
 if check_password():
         with st.sidebar:
-            choose = option_menu("Rainfall Predition Project 1", ["Take Attendance", "Consolidated Report",  "Contact","Logout"],
+            choose = option_menu("MCA Department", ["Take Attendance", "Consolidated Report",  "Contact","Logout"],
                                 icons=['house', 'bell',  'person lines fill','bell'],
                                 menu_icon="award", default_index=0,
                                 styles={
