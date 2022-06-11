@@ -1,6 +1,6 @@
 streamlit
 pandas
-pil
+Pillow
 mysql.connector
 streamlit_option_menu
 streamlit.components.v1
