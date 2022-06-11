@@ -92,7 +92,7 @@ def form1():
     attdate=st.date_input('Select Date:')
     #period=st.number_input('Select Period',value=7,min_value=1,max_value=7)
     period=st.selectbox(
-        'select batch?',
+        'select Period?',
         (1, 2,3,4,5,6,7))
     if sem == 'I-II':
         st.selectbox(
