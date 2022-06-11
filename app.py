@@ -185,7 +185,7 @@ def showconsolidated():
             sem = st.selectbox(
                 'select Semester?',
                 ('I-II',  'II-II'))
-        
+        name=str(batch)+"_"+str(branch)+"_"+str(sem)
         qry="select * from attendance where batch='"+str(batch)+"'and  branch='"+str(branch)+"' and courses='"+str(courses)+"' and sem='"+str(sem)+"' and  period='"+str(7)+"'"
         #st.write(qry)
         sql_query=pd.read_sql(qry,mydb)
@@ -198,7 +198,7 @@ def showconsolidated():
             st.dataframe(crestbl)
             #restbl.index = np.arange(1, len(restbl)+1)
             csv = crestbl.to_csv().encode('utf-8')
-            st.download_button("Press to Download", csv, "file.csv", "text/csv",  key='download-csv' )
+            st.download_button("Press to Download", csv, name+"-consolidated.csv", "text/csv",  key='download-csv' )
 
 
 
