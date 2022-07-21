@@ -194,6 +194,8 @@ def showconsolidated():
         #restbl1=tbl.pivot_table(index='regdno',columns='attendance',aggfunc='sum',margins=True,margins_name='Total')
         if not restbl.empty:
             restbl=restbl.astype(int)
+            csv1 = restbl.to_csv().encode('utf-8')
+            st.download_button("Press to Download non cumilative ", csv1, name+".csv", "text/csv",  key='download-csv' )
             crestbl=restbl.cumsum(axis = 1)
             st.dataframe(crestbl)
             #restbl.index = np.arange(1, len(restbl)+1)
