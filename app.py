@@ -201,13 +201,47 @@ def showconsolidated():
             #restbl.index = np.arange(1, len(restbl)+1)
             csv = crestbl.to_csv().encode('utf-8')
             st.download_button("Press to Download", csv, name+"-consolidated.csv", "text/csv",  key='download-csv' )
-
+def shownonconsolidated():
+        batch = st.selectbox(
+            'select batch?',
+            ('2020-2022', '2021-2023'))
+        #st.write('You selected:', batch)
+        branch = st.text_input(
+            'select branch?',
+            value='MCA',
+            disabled=True)
+        courses = st.text_input(
+                'select courses?',
+                value='MCA',
+                disabled=True
+                )
+        
+        if branch == 'MCA':
+            sem = st.selectbox(
+                'select Semester?',
+                ('I-II',  'II-II'))
+        name=str(batch)+"_"+str(branch)+"_"+str(sem)
+        qry="select * from attendance where batch='"+str(batch)+"'and  branch='"+str(branch)+"' and courses='"+str(courses)+"' and sem='"+str(sem)+"' and  period='"+str(7)+"'"
+        #st.write(qry)
+        sql_query=pd.read_sql(qry,mydb)
+        tbl=pd.DataFrame(sql_query,columns=['id','batch','branch','courses','sem','attdate','period','regdno','attendance'])
+        restbl=tbl.pivot(index='regdno',columns='attdate',values='attendance')
+        #restbl1=tbl.pivot_table(index='regdno',columns='attendance',aggfunc='sum',margins=True,margins_name='Total')
+        if not restbl.empty:
+            restbl=restbl.astype(int)
+            csv1 = restbl.to_csv().encode('utf-8')
+            st.download_button("Press to Download non cumilative ", csv1, name+".csv", "text/csv",  key='download-csv' )
+            #crestbl=restbl.cumsum(axis = 1)
+            #st.dataframe(crestbl)
+            #restbl.index = np.arange(1, len(restbl)+1)
+            #csv = crestbl.to_csv().encode('utf-8')
+            #st.download_button("Press to Download", csv, name+"-consolidated.csv", "text/csv",  key='download-csv' )
 
 
 if check_password():
         with st.sidebar:
-            choose = option_menu("MCA Department", ["Take Attendance", "Consolidated Report",  "Contact","Logout"],
-                                icons=['house', 'bell',  'person lines fill','bell'],
+            choose = option_menu("MCA Department", ["Take Attendance", "Consolidated Report", "Consolidated Report non Cumilative", "Contact","Logout"],
+                                icons=['house', 'bell',  'person lines fill','person lines fill','bell'],
                                 menu_icon="award", default_index=0,
                                 styles={
                 "container": {"padding": "5!important", "background-color": "#fafafa"},
@@ -226,6 +260,8 @@ if check_password():
                     display_datagrid()
         if choose == "Consolidated Report":
             showconsolidated()
+        if choose == "Consolidated Report non Cumilative":
+            shownonconsolidated()
         if choose == "Contact":
                 logo = Image.open(r'swrnlogo.png')
                 col1, col2, col3 = st.columns(3)
